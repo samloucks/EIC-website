@@ -16,9 +16,9 @@ browser to preview it locally.
 | `assets/favicon.png` | Browser tab icon. |
 | `.nojekyll` | Legacy GitHub Pages marker — see the note at the bottom. |
 
-## Hosting — Cloudflare Pages
+## Hosting — Cloudflare (Workers static assets)
 
-Live at **<https://emerginginvestorscanada.pages.dev>**, deployed from the `main`
+Live at **<https://emerginginvestorscanada.samloucks16.workers.dev>**, deployed from the `main`
 branch of `samloucks/EIC-website`. Cloudflare rebuilds on every push, so
 `git push` is the whole deploy process.
 
@@ -26,7 +26,7 @@ Project settings, for reference:
 
 | Setting | Value |
 | --- | --- |
-| Project name | `emerginginvestorscanada` (this is what makes the URL) |
+| Project name | `emerginginvestorscanada` (combined with the account subdomain to make the URL) |
 | Production branch | `main` |
 | Framework preset | None |
 | Build command | *(blank — there's nothing to build)* |
@@ -46,7 +46,8 @@ DNS is already in the same account and Registrar sells at wholesale cost. Then:
    minutes, no records to copy by hand.
 
 If the domain is bought elsewhere, point its nameservers at Cloudflare first, or add
-a `CNAME` for `www` → `emerginginvestorscanada.pages.dev` at the other registrar.
+a `CNAME` for `www` → `emerginginvestorscanada.samloucks16.workers.dev` at the other
+registrar.
 
 Every link inside the page is relative, so the only edit the move requires is the two
 absolute Open Graph URLs in `index.html` (`og:url` and `og:image`).
@@ -65,7 +66,9 @@ worth keeping in case Pages is ever needed as a fallback host.
 
 - **Hero photo** — it shows identifiable people. Worth confirming everyone is fine
   with appearing on a public site.
-- **`og:url` / `og:image`** — currently point at the `.pages.dev` URL. They must be
+- **`og:url` / `og:image`** — currently point at the `.workers.dev` URL. They must be
   absolute, so they need one more edit when the custom domain lands.
+- **The URL contains the account subdomain** (`samloucks16`). A custom domain is the
+  clean fix; see the section above.
 - **Social links** — none on the page yet; add to the footer nav when there are
   accounts to point at.
