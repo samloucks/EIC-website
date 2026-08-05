@@ -13,6 +13,7 @@ browser to preview it locally.
 | `assets/logo.png` | Full stacked lockup (used in the footer). |
 | `assets/mark.png` | `EIC` monogram only (used in the header). |
 | `assets/community.jpg` | Hero photo, web-optimised from the original HEIC. |
+| `assets/og-image.png` | 1200×630 link-preview card: the logo centred on white. |
 | `assets/favicon.png` | Browser tab icon. |
 | `404.html` | Branded not-found page. Cloudflare serves it with a real 404 status. |
 | `.nojekyll` | Legacy GitHub Pages marker — see the note at the bottom. |
