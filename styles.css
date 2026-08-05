@@ -356,25 +356,28 @@ a:hover { color: var(--maroon); }
   .pull { position: static; }
 }
 
-/* --- chips --------------------------------------------------------------- */
+/* --- eligibility criteria ------------------------------------------------ */
 
-.chips {
+.criteria {
   list-style: none;
-  margin: 2.75rem 0 0;
+  margin: 3rem auto 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.65rem;
+  max-width: 62rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.25rem 2.5rem;
 }
-.chips li {
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 0.55rem 1.15rem;
-  font-size: 0.925rem;
-  font-weight: 500;
-  color: var(--maroon);
+.criteria li {
+  border-top: 2px solid var(--coral);
+  padding-top: 1.15rem;
+}
+.criteria h3 {
+  font-size: 1.075rem;
+  margin-bottom: 0.4rem;
+}
+.criteria p {
+  font-size: 0.95rem;
+  margin: 0;
 }
 
 /* --- join band ----------------------------------------------------------- */
@@ -424,6 +427,16 @@ a:hover { color: var(--maroon); }
   text-decoration: none;
 }
 .footer-nav a:hover { color: var(--red); text-decoration: underline; text-underline-offset: 4px; }
+
+.footer-contact {
+  font-size: 0.925rem;
+  margin: -0.25rem 0 0;
+}
+.footer-contact a {
+  color: var(--red);
+  font-weight: 500;
+  word-break: break-word;
+}
 
 .copyright {
   font-size: 0.8rem;

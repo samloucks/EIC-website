@@ -41,17 +41,17 @@ Every later `git push` to `main` redeploys automatically.
 
 All links in the page are relative, so nothing needs editing when the domain changes.
 
-## Before going live — placeholders to replace
+## Live links used on the page
 
-The copy is a first draft written from the brand, not from your material. Search
-`index.html` for `TODO` and review these:
+- **Membership form** — <https://forms.gle/dwCPtThvG3VoUY979> (join band + footer nav)
+- **Contact** — `emerginginvestorscanada@gmail.com` (footer)
 
-- **Contact address** — currently `hello@emerginginvestorscanada.ca`. Swap it for
-  the real inbox, or point the button at a Tally / Typeform / Google Form instead.
-- **LinkedIn link in the footer** — placeholder; replace or delete.
-- **`og:url` / `og:image`** — set to absolute URLs once the domain exists, so link
-  previews render in Slack, LinkedIn and iMessage.
-- **"Est. 2025" in the hero** and the founding story in the About section —
-  confirm the dates and framing are right.
-- **Hero photo** — it shows identifiable people. Make sure everyone is fine with
-  appearing on a public site.
+## Still outstanding
+
+- **`og:url` / `og:image`** — the only remaining `TODO` in `index.html`. Set these to
+  absolute URLs once the domain exists, so link previews render properly in Slack,
+  LinkedIn and iMessage.
+- **Hero photo** — it shows identifiable people. Worth confirming everyone is fine
+  with appearing on a public site.
+- **Social links** — none on the page yet; add to the footer nav when there are
+  accounts to point at.
