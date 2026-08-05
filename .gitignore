@@ -1,0 +1,7 @@
+.DS_Store
+._*
+Thumbs.db
+
+# Original, unoptimised source assets — the web-ready copies live in assets/
+*.HEIC
+untitled_design__6__720.png
