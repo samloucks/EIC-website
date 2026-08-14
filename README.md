@@ -8,20 +8,53 @@ browser to preview it locally.
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The whole page. Content lives here, split into commented sections. |
-| `styles.css` | All styling. Brand tokens are CSS variables at the top. |
+| `index.html` | The home page. Content lives here, split into commented sections. |
+| `team.html` | The team page, served at `/team`. |
+| `styles.css` | All styling for every page. Brand tokens are CSS variables at the top. |
 | `404.html` | Branded not-found page. Cloudflare serves it with a real 404 status. |
+| `functions/_middleware.js` | 301s the retired `pages.dev` hostname. See below. |
 | `assets/mark.png` | Flat black `EIC` monogram — used in the header, on white. |
 | `assets/logo-tile.png` | The monogram on its gradient, as a square — footer and 404. |
 | `assets/favicon.png` | Browser tab icon, same tile scaled down. |
 | `assets/og-image.jpg` | 1200×630 link-preview card. |
 | `assets/community.jpg` | Hero photo, web-optimised from the original HEIC. |
+| `assets/team/*.jpg` | Founder headshots, 700×700, ~90KB each. |
 | `brand/1–5.png` | Untouched brand source art. Nothing on the site links to these. |
+| `brand/headshots/*.png` | Original 1200×1200 headshots as supplied. |
 | `.nojekyll` | Legacy GitHub Pages marker — see the note at the bottom. |
 
 Everything in `assets/` is derived from `brand/` with `sips`, so it can be
 regenerated. `brand/` is kept separate so the served folder holds only files the
 site actually references.
+
+## Pages and URLs
+
+| File | URL |
+| --- | --- |
+| `index.html` | `/` |
+| `team.html` | `/team` |
+| `404.html` | any unmatched path, with a 404 status |
+
+Cloudflare Pages strips `.html` and 308-redirects `/team.html` → `/team`, so
+internal links use the extensionless form. That means links like `/team` and
+`/#about` resolve against the site root and **will not work when opening the HTML
+straight off disk** — use a local server to preview:
+
+```
+python3 -m http.server 8790
+```
+
+Note that `python3 -m http.server` does *not* do the `.html` stripping Cloudflare
+does, so locally the page is at `/team.html`, not `/team`.
+
+## Adding someone to the team page
+
+1. Drop the headshot in `brand/headshots/`.
+2. Make the web copy — square, 700px, JPEG:
+   `sips -Z 700 brand/headshots/Name.png --out /tmp/n.png && sips -s format jpeg -s formatOptions 86 /tmp/n.png --out assets/team/name.jpg`
+3. Copy an existing `<li class="member">` block in `team.html` and change the
+   image path, name, role and LinkedIn URL. The LinkedIn glyph is a `<symbol>`
+   defined once near the top of that file, so nothing needs adding for the icon.
 
 ## Brand
 
