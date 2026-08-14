@@ -50,15 +50,15 @@ in caps mangles mixed-case terms like "VCs" into "VCS".
 
 ## Hosting — Cloudflare Pages
 
-Live at **<https://emerginginvestors.pages.dev>**, deployed from the `main`
-branch of `samloucks/EIC-website`. Cloudflare rebuilds on every push, so
-`git push` is the whole deploy process — about 75 seconds from push to live.
+Live at **<https://emerginginvestors.ca>**, deployed from the `main` branch of
+`samloucks/EIC-website`. Cloudflare rebuilds on every push, so `git push` is the
+whole deploy process — about 75 seconds from push to live.
 
 Project settings, for reference:
 
 | Setting | Value |
 | --- | --- |
-| Project name | `emerginginvestors` (this is what makes the URL) |
+| Project name | `emerginginvestors` |
 | Production branch | `main` |
 | Framework preset | None |
 | Build command | *(blank — there's nothing to build)* |
@@ -67,21 +67,42 @@ Project settings, for reference:
 Pull requests get their own preview URL automatically, which is handy for reviewing
 copy changes before they go live.
 
-## Moving to a custom domain later
+## The pages.dev subdomain
 
-Buying the domain through **Cloudflare Registrar** keeps this to a few clicks, since
-DNS is already in the same account and Registrar sells at wholesale cost. Then:
+Cloudflare permanently attaches `emerginginvestors.pages.dev` to the project.
+**There is no way to remove or disable it** — no dashboard setting, no API call.
+Deleting the Pages project is the only thing that retires it, and that would take
+the site down with it.
 
-1. **Workers & Pages → emerginginvestors → Custom domains → Set up a domain**
-2. Enter the apex (`emerginginvestorscanada.ca`) and repeat for `www`.
-3. Cloudflare adds the DNS records and issues the certificate itself — usually a few
-   minutes, no records to copy by hand.
+Two things keep it from behaving like a second live copy of the site:
 
-If the domain is bought elsewhere, point its nameservers at Cloudflare first, or add
-a `CNAME` for `www` → `emerginginvestors.pages.dev` at the other registrar.
+1. `functions/_middleware.js` returns a **301** from `emerginginvestors.pages.dev`
+   to `emerginginvestors.ca`, preserving path and query string. It deliberately
+   matches only the production hostname — preview deployments live at
+   `<hash>.emerginginvestors.pages.dev` and redirecting those would send every PR
+   preview to production.
+2. `index.html` carries `<link rel="canonical">` pointing at the real domain, so
+   search engines consolidate on `.ca` regardless.
 
-Every link inside the page is relative, so the only edit the move requires is the two
-absolute Open Graph URLs in `index.html` (`og:url` and `og:image`).
+The middleware is the only server-side code here. Deleting the file returns the
+project to pure static hosting; the canonical tag keeps working on its own.
+
+One cost worth knowing: root middleware runs on every request, static assets
+included, and each counts against the Pages Functions free allowance of 100,000
+invocations per day. At roughly 7 requests per page view that is around 14,000
+daily page views before it matters.
+
+## DNS
+
+| Record | Status |
+| --- | --- |
+| `emerginginvestors.ca` (apex) | Live, HTTPS, HTTP redirects up to HTTPS |
+| `www.emerginginvestors.ca` | **Not configured** — does not resolve |
+
+To add `www`: **Workers & Pages → emerginginvestors → Custom domains → Set up a
+domain**, enter `www.emerginginvestors.ca`. Cloudflare writes the DNS record and
+issues the certificate. Adding it is worth doing even if the apex is the address
+you publish, because people type `www` out of habit.
 
 ## The `.nojekyll` file
 
@@ -97,8 +118,10 @@ worth keeping in case Pages is ever needed as a fallback host.
 
 - **Hero photo** — it shows identifiable people. Worth confirming everyone is fine
   with appearing on a public site.
-- **`og:url` / `og:image`** — currently point at the `.pages.dev` URL. They must be
-  absolute, so they need one more edit when the custom domain lands. They are the only
-  place in the project that hardcodes the hostname.
+- **`www` subdomain** — not configured; see the DNS section above.
 - **Social links** — none on the page yet; add to the footer nav when there are
   accounts to point at.
+
+The hostname appears in exactly three places: `og:url`, `og:image` and the
+canonical `<link>` in `index.html`, plus `CANONICAL_HOST` in
+`functions/_middleware.js`.
