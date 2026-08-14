@@ -326,40 +326,6 @@ a:hover { text-decoration-color: var(--peach); }
 .section-alt { background: var(--cream); }
 .section, .join, .hero { scroll-margin-top: 5rem; }
 
-/* --- pillar cards -------------------------------------------------------- */
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-  gap: 1.5rem;
-  margin-top: 3.25rem;
-}
-
-.card {
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 2.1rem 1.85rem;
-  transition: border-color 0.18s ease, transform 0.18s ease;
-}
-.card:hover { border-color: var(--peach); transform: translateY(-3px); }
-
-.card-num {
-  display: block;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--ink);
-  padding-bottom: 1.15rem;
-  margin-bottom: 1.15rem;
-  border-bottom: 2px solid var(--peach);
-}
-.card p { font-size: 0.97rem; }
-
-@media (prefers-reduced-motion: reduce) {
-  .card, .card:hover { transform: none; transition: none; }
-}
-
 /* --- about split --------------------------------------------------------- */
 
 .split {
