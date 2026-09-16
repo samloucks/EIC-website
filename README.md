@@ -10,6 +10,7 @@ browser to preview it locally.
 | --- | --- |
 | `index.html` | The home page. Content lives here, split into commented sections. |
 | `team.html` | The team page, served at `/team`. |
+| `code-of-conduct.html` | Community code of conduct, served at `/code-of-conduct`. |
 | `styles.css` | All styling for every page. Brand tokens are CSS variables at the top. |
 | `404.html` | Branded not-found page. Cloudflare serves it with a real 404 status. |
 | `functions/_middleware.js` | 301s the retired `pages.dev` hostname. See below. |
@@ -33,6 +34,7 @@ site actually references.
 | --- | --- |
 | `index.html` | `/` |
 | `team.html` | `/team` |
+| `code-of-conduct.html` | `/code-of-conduct` |
 | `404.html` | any unmatched path, with a 404 status |
 
 Cloudflare Pages strips `.html` and 308-redirects `/team.html` → `/team`, so
