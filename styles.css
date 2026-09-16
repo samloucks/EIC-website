@@ -360,19 +360,30 @@ a:hover { text-decoration-color: var(--peach); }
 }
 @media (max-width: 860px) { .pull { position: static; } }
 
-/* --- eligibility criteria ------------------------------------------------ */
+/* --- ecosystem chips ----------------------------------------------------- */
 
-.criteria {
+.chips-intro { margin-top: 2.5rem; margin-bottom: 0; }
+
+.chips {
   list-style: none;
-  margin: 3.25rem auto 0;
+  margin: 1.6rem auto 0;
   padding: 0;
-  max-width: 64rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-  gap: 1.5rem 2.75rem;
+  max-width: 52rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
 }
-.criteria li { border-top: 2px solid var(--sand); padding-top: 1.25rem; }
-.criteria p { font-size: 0.95rem; margin: 0; }
+.chips li {
+  background: rgba(235, 186, 166, 0.3);
+  border-radius: 999px;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.925rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.chips-outro { margin-top: 2.75rem; }
 
 /* --- team page ----------------------------------------------------------- */
 
@@ -389,6 +400,10 @@ a:hover { text-decoration-color: var(--peach); }
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
   gap: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 2.5vw, 2rem);
 }
+
+/* Column layout so the LinkedIn link can be pushed to the bottom of every
+   card, keeping the row of links aligned when roles wrap to different heights. */
+.member { display: flex; flex-direction: column; }
 
 .member img {
   width: 100%;
@@ -411,13 +426,18 @@ a:hover { text-decoration-color: var(--peach); }
 .member-role {
   font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  /* Roles run to three words, so this is looser tracking than the other
+     uppercase labels get. */
+  letter-spacing: 0.12em;
+  line-height: 1.5;
   text-transform: uppercase;
   color: var(--body);
   margin: 0 0 0.9rem;
 }
 
 .member-link {
+  margin-top: auto;
+  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
