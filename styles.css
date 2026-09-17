@@ -246,7 +246,13 @@ a:hover { text-decoration-color: var(--peach); }
   border-left: 1px solid var(--line);
 }
 
-.site-nav { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.1rem); }
+.site-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.6rem clamp(0.9rem, 2vw, 1.9rem);
+}
 /* :not(.btn) matters — a bare `.site-nav a` selector outranks `.btn` on
    specificity and would paint the button's label black on black. */
 .site-nav a:not(.btn) { color: var(--ink); }
