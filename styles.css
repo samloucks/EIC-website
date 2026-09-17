@@ -516,8 +516,8 @@ a:hover { text-decoration-color: var(--peach); }
   margin-bottom: 0.7rem;
 }
 
-/* Consequences are the part members most need to notice, so they get the
-   peach rule rather than sitting as another body paragraph. */
+/* The firm line in an otherwise warmly worded document — set off with the peach
+   rule so it does not read as just another body paragraph. */
 .consequence {
   margin-top: 1rem;
   padding: 0.1rem 0 0.1rem 1.15rem;
