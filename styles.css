@@ -311,7 +311,7 @@ a:hover { text-decoration-color: var(--peach); }
   width: 100%;
   aspect-ratio: 16 / 8;
   object-fit: cover;
-  object-position: 50% 68%;
+  object-position: 50% 50%;
   border-radius: var(--radius);
 }
 .hero-photo figcaption {
@@ -323,7 +323,7 @@ a:hover { text-decoration-color: var(--peach); }
   color: var(--ink);
 }
 @media (max-width: 640px) {
-  .hero-photo img { aspect-ratio: 4 / 3; object-position: 50% 60%; }
+  .hero-photo img { aspect-ratio: 4 / 3; object-position: 50% 50%; }
 }
 
 /* --- sections ------------------------------------------------------------ */

@@ -18,10 +18,11 @@ browser to preview it locally.
 | `assets/logo-tile.png` | The monogram on its gradient, as a square — footer and 404. |
 | `assets/favicon.png` | Browser tab icon, same tile scaled down. |
 | `assets/og-image.jpg` | 1200×630 link-preview card. |
-| `assets/community.jpg` | Hero photo, web-optimised from the original HEIC. |
+| `assets/marquee.jpg` | Hero photo, 2000×1399, ~500KB. Cropped to 2:1 by CSS. |
 | `assets/team/*.jpg` | Founder headshots, 700×700, ~90KB each. |
 | `brand/1–5.png` | Untouched brand source art. Nothing on the site links to these. |
 | `brand/headshots/*.png` | Original 1200×1200 headshots as supplied. |
+| `brand/photos/*` | Full-resolution originals of the hero photos. |
 | `.nojekyll` | Legacy GitHub Pages marker — see the note at the bottom. |
 
 Everything in `assets/` is derived from `brand/` with `sips`, so it can be
