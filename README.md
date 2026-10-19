@@ -19,7 +19,7 @@ browser to preview it locally.
 | `assets/favicon.png` | Browser tab icon, same tile scaled down. |
 | `assets/og-image.jpg` | 1200×630 link-preview card. |
 | `assets/marquee.jpg` | Hero photo, 2000×1399, ~500KB. Cropped to 2:1 by CSS. |
-| `assets/team/*.jpg` | Founder headshots, 700×700, ~90KB each. |
+| `assets/team/*.jpg` | Team headshots, 700×700, 55–105KB each. |
 | `brand/1–5.png` | Untouched brand source art. Nothing on the site links to these. |
 | `brand/headshots/*.png` | Original 1200×1200 headshots as supplied. |
 | `brand/photos/*` | Full-resolution originals of the hero photos. |
@@ -58,6 +58,11 @@ does, so locally the page is at `/team.html`, not `/team`.
 3. Copy an existing `<li class="member">` block in `team.html` and change the
    image path, name, role and LinkedIn URL. The LinkedIn glyph is a `<symbol>`
    defined once near the top of that file, so nothing needs adding for the icon.
+   If there is no LinkedIn URL, drop the whole `<a class="member-link">` block —
+   the card lays out correctly without it.
+
+Cards appear in document order; there is no sorting. `sam-loucks.jpg` is spelled
+out because `samuel.jpg` is already Samuel Wang.
 
 ## Brand
 
