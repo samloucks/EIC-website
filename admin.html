@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approvals — Emerging Investors Canada</title>
+<meta name="description" content="Approve or decline Emerging Investors Canada member applications.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#EBBAA6">
+
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" defer></script>
+<script src="/assets/js/config.js" defer></script>
+<script src="/assets/js/auth.js" defer></script>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/admin.js" defer></script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/" aria-label="Emerging Investors Canada — home">
+      <img src="/assets/mark.png" alt="" width="662" height="388">
+      <span class="brand-text">
+        <span>Emerging Investors</span>
+        <span>Canada</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/#about">About</a>
+      <a href="/#who">Who it's for</a>
+      <a href="/team">Team</a>
+
+      <div class="nav-group" data-nav-group>
+        <button type="button" class="nav-trigger" data-nav-trigger
+                aria-expanded="false" aria-controls="nav-resources">
+          Resources
+          <svg class="nav-caret" width="10" height="6" viewBox="0 0 10 6"
+               aria-hidden="true" focusable="false">
+            <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="nav-menu" id="nav-resources" data-nav-menu>
+          <a href="/members">Member directory</a>
+          <a href="/code-of-conduct">Code of conduct</a>
+        </div>
+      </div>
+
+      <a class="btn btn-sm" href="/#join">Join us</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap account-bar" data-account hidden></div>
+
+<main id="main">
+
+  <section class="page-head washed">
+    <div class="wrap">
+      <p class="eyebrow">Organisers only</p>
+      <h1>Approvals.</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+
+      <div class="gate-loading" data-gate-view="loading">
+        <span class="spinner" aria-hidden="true"></span>
+        <p role="status">Loading applications…</p>
+      </div>
+
+      <div class="status-card" data-gate-view="error" hidden>
+        <p class="eyebrow">Problem</p>
+        <h2>The directory is unavailable.</h2>
+        <p class="lede" data-gate-error></p>
+      </div>
+
+      <div data-gate-view="admin" hidden>
+        <p class="auth-message" data-admin-message role="status" hidden></p>
+
+        <section class="admin-section">
+          <h2 class="admin-heading">
+            Waiting for review <span class="admin-tally" data-tally="pending"></span>
+          </h2>
+          <ul class="admin-list" data-list="pending"></ul>
+          <p class="admin-empty" data-empty="pending" hidden>
+            Nothing waiting — every application has been dealt with.
+          </p>
+        </section>
+
+        <section class="admin-section">
+          <h2 class="admin-heading">
+            Approved members <span class="admin-tally" data-tally="approved"></span>
+          </h2>
+          <ul class="admin-list" data-list="approved"></ul>
+          <p class="admin-empty" data-empty="approved" hidden>
+            No approved members yet.
+          </p>
+        </section>
+
+        <section class="admin-section">
+          <h2 class="admin-heading">
+            Declined <span class="admin-tally" data-tally="declined"></span>
+          </h2>
+          <ul class="admin-list" data-list="declined"></ul>
+          <p class="admin-empty" data-empty="declined" hidden>
+            Nobody has been declined.
+          </p>
+        </section>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <img class="footer-logo" src="/assets/logo-tile.png" alt="Emerging Investors Canada" width="360" height="360">
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="/#about">About</a>
+      <a href="/#who">Who it's for</a>
+      <a href="/team">Team</a>
+      <a href="/members">Member directory</a>
+      <a href="/code-of-conduct">Code of conduct</a>
+      <a href="https://forms.gle/dwCPtThvG3VoUY979" target="_blank" rel="noopener">Join us</a>
+    </nav>
+
+    <p class="footer-contact">
+      Questions? Reach us at
+      <a href="mailto:emerginginvestorscanada@gmail.com">emerginginvestorscanada@gmail.com</a>
+    </p>
+
+    <p class="copyright">&copy; 2026 Emerging Investors Canada. Made in Canada.</p>
+  </div>
+</footer>
+
+</body>
+</html>
