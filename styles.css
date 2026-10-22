@@ -93,6 +93,12 @@ body {
 
 img { max-width: 100%; height: auto; display: block; }
 
+/* A `display` value in a class rule outranks the user-agent's
+   `[hidden] { display: none }`, so any element given both — the member pages
+   toggle several flex and grid containers — would stay visible. The member
+   pages rely on [hidden] to switch views, so this has to be absolute. */
+[hidden] { display: none !important; }
+
 /* --- type ---------------------------------------------------------------- */
 
 h1, h2 {
@@ -637,4 +643,508 @@ a:hover { text-decoration-color: var(--peach); }
 
   /* balance produces very ragged lines in a narrow column */
   h1, h2 { text-wrap: pretty; }
+}
+
+/* --- resources dropdown --------------------------------------------------- */
+
+.nav-group { position: relative; display: flex; align-items: center; }
+
+/* The trigger is a <button>, so it inherits none of the .site-nav a rules and
+   has to restate the nav's label treatment. */
+.nav-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+}
+.nav-trigger:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: var(--peach);
+  text-decoration-thickness: 2px;
+}
+
+.nav-caret { flex: none; transition: transform 0.16s ease; }
+.nav-trigger[aria-expanded="true"] .nav-caret { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .nav-caret { transition: none; } }
+
+.nav-menu {
+  position: absolute;
+  top: calc(100% + 0.9rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  min-width: 13.5rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(11, 11, 10, 0.12);
+}
+.nav-menu a {
+  padding: 0.62rem 0.8rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+/* Outranks `.site-nav a:not(.btn):hover`, which would otherwise underline
+   these as though they were top-level nav links. */
+.site-nav .nav-menu a:not(.btn):hover {
+  background: rgba(235, 186, 166, 0.28);
+  text-decoration: none;
+}
+.site-nav .nav-menu a[aria-current="page"] { background: rgba(235, 186, 166, 0.38); }
+
+/* --- account strip -------------------------------------------------------- */
+
+.account-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem 1.3rem;
+  padding-block: 0.7rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+/* Pushed left, and left in sentence case — it is a person's name, not a label. */
+.account-name {
+  margin-right: auto;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--body);
+}
+.account-bar a { color: var(--ink); text-decoration: none; }
+.account-bar a:hover,
+.account-signout:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--peach);
+  text-decoration-thickness: 2px;
+}
+.account-signout {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* --- loading / messages --------------------------------------------------- */
+
+.gate-loading { display: flex; align-items: center; gap: 0.85rem; color: var(--body); }
+.gate-loading p { margin: 0; }
+
+.spinner {
+  display: inline-block;
+  flex: none;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 2px solid rgba(11, 11, 10, 0.18);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.4s; } }
+
+.auth-message {
+  margin: 1.3rem 0 0;
+  padding: 0.85rem 1.1rem;
+  border-radius: 10px;
+  font-size: 0.925rem;
+  line-height: 1.55;
+}
+/* Neither brand tint can carry text, so the two states borrow a deep red and
+   green that clear 4.5:1 on their own tinted backgrounds. */
+.auth-message.is-error { background: #FDECEC; color: #7A1F1F; border-left: 3px solid #C0392B; }
+.auth-message.is-ok    { background: #ECF7EF; color: #1E5230; border-left: 3px solid #2E7D4F; }
+
+/* --- cards ---------------------------------------------------------------- */
+
+.auth-card,
+.status-card {
+  max-width: 34rem;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 44px rgba(11, 11, 10, 0.06);
+}
+.status-card { max-width: 42rem; }
+.auth-card h2,
+.status-card h2 {
+  font-size: clamp(1.4rem, 1.1rem + 1vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.auth-intro { margin-bottom: 1.75rem; }
+.auth-fine { margin-top: 1.6rem; font-size: 0.8rem; color: var(--body); }
+.status-card .cta-row { margin-top: 1.9rem; }
+
+/* --- forms ---------------------------------------------------------------- */
+
+.field { margin-bottom: 1.15rem; }
+.field:last-child { margin-bottom: 0; }
+
+.field label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.req { margin-left: 0.15rem; color: #B5462F; }
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.72rem 0.9rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--white);
+  border: 1.5px solid rgba(11, 11, 10, 0.18);
+  border-radius: 10px;
+}
+.field textarea { resize: vertical; min-height: 6rem; line-height: 1.6; }
+.field input:hover,
+.field select:hover,
+.field textarea:hover { border-color: rgba(11, 11, 10, 0.34); }
+.field input:focus,
+.field select:focus,
+.field textarea:focus { border-color: var(--ink); }
+
+.field-hint { margin: 0.45rem 0 0; font-size: 0.8rem; color: var(--body); }
+.field-hint-block { margin: 0 0 1.15rem; }
+
+.field-set { margin: 0 0 clamp(2rem, 4vw, 2.75rem); padding: 0; border: 0; }
+.field-set legend {
+  padding: 0;
+  margin-bottom: 1.15rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.15rem; }
+@media (max-width: 640px) { .field-row { grid-template-columns: 1fr; } }
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+}
+
+.link-button {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--peach);
+  text-decoration-thickness: 2px;
+  cursor: pointer;
+}
+.link-button:hover { text-decoration-color: var(--ink); }
+
+/* --- sign in -------------------------------------------------------------- */
+
+.btn-google {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--white);
+  border: 1.5px solid rgba(11, 11, 10, 0.2);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background-color 0.16s ease;
+}
+.btn-google:hover { background: var(--cream); border-color: var(--ink); }
+.google-mark { flex: none; }
+@media (prefers-reduced-motion: reduce) { .btn-google { transition: none; } }
+
+.auth-or {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.7rem 0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+.auth-or::before,
+.auth-or::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+.auth-switch {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-bottom: 1.6rem;
+  padding: 0.25rem;
+  background: rgba(11, 11, 10, 0.05);
+  border-radius: 999px;
+}
+.auth-switch button {
+  padding: 0.55rem 1.1rem;
+  background: none;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--body);
+  cursor: pointer;
+}
+.auth-switch button[aria-pressed="true"] {
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(11, 11, 10, 0.14);
+}
+
+.auth-form .btn { width: 100%; margin-top: 0.5rem; text-align: center; }
+.auth-form .link-button { display: block; margin: 1.1rem auto 0; }
+.auth-form .btn:disabled { opacity: 0.65; cursor: default; transform: none; }
+
+/* --- profile form --------------------------------------------------------- */
+
+.profile-intro { margin-bottom: 0; }
+.profile-form { max-width: 46rem; margin-top: clamp(1.75rem, 4vw, 2.5rem); }
+
+.interest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: 0.6rem;
+}
+.interest {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.925rem;
+  line-height: 1.35;
+  color: var(--ink);
+  background: var(--white);
+  border: 1.5px solid rgba(11, 11, 10, 0.14);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.interest:hover { border-color: var(--peach); }
+.interest input { flex: none; width: 1.05rem; height: 1.05rem; margin: 0; accent-color: var(--ink); }
+/* Checked state on the whole tile. Where :has is unsupported the native
+   checkbox still shows the state, so nothing is lost. */
+.interest:has(input:checked) { border-color: var(--ink); background: rgba(235, 186, 166, 0.18); }
+
+/* --- directory ------------------------------------------------------------ */
+
+.filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 1rem;
+  align-items: end;
+}
+.filters .field { margin-bottom: 0; }
+.filter-clear { grid-column: 1 / -1; justify-self: start; }
+@media (max-width: 900px) {
+  .filters { grid-template-columns: 1fr 1fr; }
+  .filter-search { grid-column: 1 / -1; }
+}
+@media (max-width: 540px) { .filters { grid-template-columns: 1fr; } }
+
+.result-count {
+  margin: 1.75rem 0 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.directory-grid {
+  list-style: none;
+  margin: 1.4rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19.5rem), 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* .member already supplies the column flex that pins .member-link to the
+   bottom of the card — this only adds the card itself. */
+.member-card {
+  padding: 1.6rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.member-card.is-me { border: 2px solid var(--peach); }
+.member-you {
+  align-self: flex-start;
+  margin: 0 0 0.85rem;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(235, 186, 166, 0.45);
+  border-radius: 999px;
+}
+.member-country { margin: 0 0 0.95rem; font-size: 0.875rem; color: var(--body); }
+.member-facts   { margin: 0 0 1rem; font-size: 0.925rem; }
+
+.member-interests {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 1.1rem;
+  padding: 0;
+}
+.member-interests li {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: var(--ink);
+  background: rgba(235, 186, 166, 0.3);
+  border-radius: 999px;
+}
+
+.member-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin: 0 0 1.1rem;
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+.member-contact a { color: var(--ink); }
+
+.empty-state { margin-top: 2.5rem; text-align: center; }
+.empty-state h2 { font-size: 1.4rem; font-weight: 600; }
+.empty-state .lede { margin-inline: auto; }
+
+/* --- admin ---------------------------------------------------------------- */
+
+.admin-section { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+.admin-section:first-of-type { margin-top: 0; }
+
+.admin-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.8rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--line);
+}
+.admin-tally {
+  padding: 0.2rem 0.7rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  background: rgba(235, 186, 166, 0.42);
+  border-radius: 999px;
+}
+
+.admin-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+.admin-empty { margin: 0; font-size: 0.925rem; color: var(--body); }
+
+.admin-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.6rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.admin-row-main { flex: 1 1 22rem; min-width: 0; }
+.admin-row .member-name { font-size: 1.1rem; }
+.admin-row .member-contact { flex-direction: row; flex-wrap: wrap; gap: 0.3rem 1.1rem; }
+
+.admin-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+.admin-actions .btn:disabled { opacity: 0.55; cursor: default; transform: none; }
+
+.admin-date { margin: 0; font-size: 0.75rem; color: var(--body); }
+.admin-self { margin: 0; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--body); }
+
+.admin-badge {
+  margin-left: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--ink);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
+/* --- member pages on small screens ---------------------------------------- */
+
+@media (max-width: 640px) {
+  /* The menu is centred on the whole nav rather than on the trigger, which at
+     this width can sit close enough to an edge to push a centred panel off
+     screen. */
+  .site-nav { position: relative; }
+  .nav-group { position: static; }
+  .nav-menu {
+    left: 50%;
+    width: min(20rem, calc(100vw - 2.5rem));
+    min-width: 0;
+  }
+
+  .account-bar { justify-content: center; }
+  .account-name { margin-right: 0; width: 100%; text-align: center; }
+
+  .admin-row { padding: 1.25rem; }
+  .admin-actions { width: 100%; }
 }

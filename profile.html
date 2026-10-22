@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My profile — Emerging Investors Canada</title>
+<meta name="description" content="Your Emerging Investors Canada member profile.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#EBBAA6">
+
+<link rel="icon" href="/assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js" defer></script>
+<script src="/assets/js/config.js" defer></script>
+<script src="/assets/js/auth.js" defer></script>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/profile.js" defer></script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/" aria-label="Emerging Investors Canada — home">
+      <img src="/assets/mark.png" alt="" width="662" height="388">
+      <span class="brand-text">
+        <span>Emerging Investors</span>
+        <span>Canada</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/#about">About</a>
+      <a href="/#who">Who it's for</a>
+      <a href="/team">Team</a>
+
+      <div class="nav-group" data-nav-group>
+        <button type="button" class="nav-trigger" data-nav-trigger
+                aria-expanded="false" aria-controls="nav-resources">
+          Resources
+          <svg class="nav-caret" width="10" height="6" viewBox="0 0 10 6"
+               aria-hidden="true" focusable="false">
+            <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="nav-menu" id="nav-resources" data-nav-menu>
+          <a href="/members" aria-current="page">Member directory</a>
+          <a href="/code-of-conduct">Code of conduct</a>
+        </div>
+      </div>
+
+      <a class="btn btn-sm" href="/#join">Join us</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap account-bar" data-account hidden></div>
+
+<main id="main">
+
+  <section class="page-head washed">
+    <div class="wrap">
+      <p class="eyebrow" data-page-eyebrow>Your details</p>
+      <h1 data-page-title>My profile.</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+
+      <div class="gate-loading" data-gate-view="loading">
+        <span class="spinner" aria-hidden="true"></span>
+        <p role="status">Loading your profile…</p>
+      </div>
+
+      <div class="status-card" data-gate-view="error" hidden>
+        <p class="eyebrow">Problem</p>
+        <h2>The directory is unavailable.</h2>
+        <p class="lede" data-gate-error></p>
+      </div>
+
+      <div data-gate-view="form" hidden>
+        <p class="profile-intro measure" data-form-intro>
+          This is what other members see when they find you in the directory.
+          Your email and phone number are visible to approved EIC members only —
+          never to the public web.
+        </p>
+
+        <form class="profile-form" data-form="profile" novalidate>
+
+          <fieldset class="field-set">
+            <legend>About you</legend>
+
+            <div class="field">
+              <label for="full_name">Full name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="full_name" name="full_name"
+                     autocomplete="name" maxlength="120" required>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="contact_email">Contact email <span class="req" aria-hidden="true">*</span></label>
+                <input type="email" id="contact_email" name="contact_email"
+                       autocomplete="email" maxlength="180" required>
+                <p class="field-hint">Where members should reach you. It can differ from your sign-in address.</p>
+              </div>
+              <div class="field">
+                <label for="phone">Phone number</label>
+                <input type="tel" id="phone" name="phone"
+                       autocomplete="tel" maxlength="40"
+                       placeholder="+1 416 555 0123">
+                <p class="field-hint">Optional.</p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="field-set">
+            <legend>Where you work</legend>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="company">Company <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="company" name="company"
+                       autocomplete="organization" maxlength="120" required>
+              </div>
+              <div class="field">
+                <label for="role">Role <span class="req" aria-hidden="true">*</span></label>
+                <select id="role" name="role" required></select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="country">Country <span class="req" aria-hidden="true">*</span></label>
+                <select id="country" name="country" required></select>
+              </div>
+              <div class="field">
+                <label for="linkedin_url">LinkedIn</label>
+                <input type="url" id="linkedin_url" name="linkedin_url"
+                       maxlength="240" placeholder="https://www.linkedin.com/in/…">
+                <p class="field-hint">Optional.</p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="field-set">
+            <legend>Interests</legend>
+            <p class="field-hint field-hint-block">
+              Pick as many as you like — members can filter the directory by these.
+            </p>
+            <div class="interest-grid" data-interests></div>
+          </fieldset>
+
+          <fieldset class="field-set">
+            <legend>Fun facts</legend>
+            <div class="field">
+              <label for="fun_facts">Tell people something about yourself</label>
+              <textarea id="fun_facts" name="fun_facts" rows="4" maxlength="600"
+                        placeholder="Grew up in Halifax, ran the Berlin marathon, will argue about espresso for hours."></textarea>
+              <p class="field-hint">
+                Optional, up to 600 characters.
+                <span data-counter aria-live="polite"></span>
+              </p>
+            </div>
+          </fieldset>
+
+          <p class="auth-message" data-profile-message role="status" hidden></p>
+
+          <div class="form-actions">
+            <button type="submit" class="btn" data-submit>Save profile</button>
+            <a class="btn btn-ghost" data-cancel href="/members" hidden>Back to the directory</a>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <img class="footer-logo" src="/assets/logo-tile.png" alt="Emerging Investors Canada" width="360" height="360">
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="/#about">About</a>
+      <a href="/#who">Who it's for</a>
+      <a href="/team">Team</a>
+      <a href="/members">Member directory</a>
+      <a href="/code-of-conduct">Code of conduct</a>
+      <a href="https://forms.gle/dwCPtThvG3VoUY979" target="_blank" rel="noopener">Join us</a>
+    </nav>
+
+    <p class="footer-contact">
+      Questions? Reach us at
+      <a href="mailto:emerginginvestorscanada@gmail.com">emerginginvestorscanada@gmail.com</a>
+    </p>
+
+    <p class="copyright">&copy; 2026 Emerging Investors Canada. Made in Canada.</p>
+  </div>
+</footer>
+
+</body>
+</html>
