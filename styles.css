@@ -228,6 +228,7 @@ a:hover { text-decoration-color: var(--peach); }
 }
 
 .header-inner {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -647,7 +648,13 @@ a:hover { text-decoration-color: var(--peach); }
 
 /* --- resources dropdown --------------------------------------------------- */
 
-.nav-group { position: relative; display: flex; align-items: center; }
+/* The panel hangs off the bottom of the header bar rather than off the trigger.
+   The trigger is a ~19px button sitting inside a ~70px bar, so anchoring the
+   panel to it put the panel's top edge *above* the header's bottom edge — the
+   rounded corners and shadow were swallowed by the white bar. .header-inner is
+   the header's content container, so its bottom edge tracks the bar's whatever
+   the padding or the tallest nav item. */
+.nav-group { position: static; display: flex; align-items: center; }
 
 /* The trigger is a <button>, so it inherits none of the .site-nav a rules and
    has to restate the nav's label treatment. */
@@ -680,9 +687,12 @@ a:hover { text-decoration-color: var(--peach); }
 
 .nav-menu {
   position: absolute;
-  top: calc(100% + 0.9rem);
-  left: 50%;
-  transform: translateX(-50%);
+  top: calc(100% + 0.55rem);
+  /* var(--gutter), not 0 — an absolutely positioned box resolves against the
+     containing block's padding box, and .header-inner is a .wrap whose padding
+     is the page gutter. Offsetting by the gutter lines the panel's right edge
+     up with the nav's. */
+  right: var(--gutter);
   z-index: 60;
   min-width: 13.5rem;
   display: flex;
@@ -754,7 +764,7 @@ a:hover { text-decoration-color: var(--peach); }
 
 /* --- loading / messages --------------------------------------------------- */
 
-.gate-loading { display: flex; align-items: center; gap: 0.85rem; color: var(--body); }
+.gate-loading { display: flex; align-items: center; justify-content: center; gap: 0.85rem; color: var(--body); }
 .gate-loading p { margin: 0; }
 
 .spinner {
@@ -787,6 +797,7 @@ a:hover { text-decoration-color: var(--peach); }
 .auth-card,
 .status-card {
   max-width: 34rem;
+  margin-inline: auto;
   padding: clamp(1.75rem, 4vw, 2.75rem);
   background: var(--white);
   border: 1px solid var(--line);
@@ -826,12 +837,32 @@ a:hover { text-decoration-color: var(--peach); }
   width: 100%;
   padding: 0.72rem 0.9rem;
   font: inherit;
+  /* Explicit, because `font: inherit` hands an <input> the body's 1.68
+     line-height while a <select> resolves it to `normal`. That made the search
+     box 8px taller than the dropdowns beside it, and the filter row aligns on
+     `end`, so its label sat 8px out of line with the other three. */
+  line-height: 1.4;
   color: var(--ink);
   background: var(--white);
   border: 1.5px solid rgba(11, 11, 10, 0.18);
   border-radius: 10px;
 }
 .field textarea { resize: vertical; min-height: 6rem; line-height: 1.6; }
+
+/* A native <select> sizes itself from UA font metrics and ignores line-height,
+   so it stayed 3px shorter than the inputs beside it however the padding was
+   set. appearance:none makes it an ordinary box that honours the shared
+   padding, which also lets the caret match the one in the header nav. */
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%230B0B0A' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.95rem center;
+  background-size: 10px 6px;
+  cursor: pointer;
+}
 .field input:hover,
 .field select:hover,
 .field textarea:hover { border-color: rgba(11, 11, 10, 0.34); }
@@ -1134,10 +1165,10 @@ a:hover { text-decoration-color: var(--peach); }
   /* The menu is centred on the whole nav rather than on the trigger, which at
      this width can sit close enough to an edge to push a centred panel off
      screen. */
-  .site-nav { position: relative; }
-  .nav-group { position: static; }
   .nav-menu {
     left: 50%;
+    right: auto;
+    transform: translateX(-50%);
     width: min(20rem, calc(100vw - 2.5rem));
     min-width: 0;
   }
