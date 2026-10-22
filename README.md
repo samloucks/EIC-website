@@ -176,6 +176,34 @@ and they get a note pointing them at the contact address. Declining asks for
 confirmation first. You cannot change your own status from that page, which
 stops an organiser locking themselves out.
 
+### Passwords
+
+No password ever reaches this codebase, this repository, or the `profiles`
+table. The sign-in form hands the value straight to the Supabase client, which
+posts it over HTTPS to Supabase Auth; nothing here stores it, logs it, caches
+it or puts it in a URL. Members who sign in with Google have no password at
+all — Google does that authentication and Supabase only ever sees the result.
+
+Supabase Auth stores the credential in `auth.users.encrypted_password`. Despite
+the column name that is a **bcrypt hash, not encryption**, which is the correct
+choice: encryption is reversible, so a stolen database plus a stolen key would
+expose every password. A hash is one-way, and bcrypt is deliberately slow and
+individually salted, so a stolen table cannot be reversed or attacked with
+precomputed tables. You can confirm the algorithm yourself once an account
+exists — the `$2a$` prefix is bcrypt and the number after it is the cost factor:
+
+```sql
+select left(encrypted_password, 7) as algorithm from auth.users limit 1;
+```
+
+Three settings are worth hardening, none of which live in this repo:
+
+| Where | Setting | Why |
+| --- | --- | --- |
+| Supabase → Authentication → Policies | Minimum password length **8+** | The sign-up form asks for 8, but client-side validation is advisory — anyone can bypass it from the browser console. Only the server minimum is binding, and it defaults to 6. |
+| Supabase → Authentication → Policies | Enable **leaked password protection** | Checks new passwords against HaveIBeenPwned, so a member cannot reuse one from a known breach. Off by default. |
+| Cloudflare → SSL/TLS → Edge Certificates | Enable **HSTS** | The site already 301s HTTP to HTTPS, but without HSTS the very first request can still be intercepted before the redirect. |
+
 ### Worth knowing
 
 - **Email deliverability.** Supabase's built-in email sender is rate-limited to

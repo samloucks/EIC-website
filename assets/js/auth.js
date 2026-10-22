@@ -220,7 +220,10 @@
       [/invalid login credentials/i,       'That email and password combination does not match an account.'],
       [/email not confirmed/i,             'Check your inbox and click the confirmation link before signing in.'],
       [/user already registered/i,         'There is already an account with that email. Try signing in instead.'],
-      [/password should be at least/i,     'Please choose a password of at least six characters.'],
+      /* Deliberately no number: the client asks for 8, but this fires on the
+         server's own minimum, which is configured in Supabase and may differ.
+         Naming a figure here would eventually contradict one of the two. */
+      [/password should be at least/i,     'That password is too short. Please choose a longer one.'],
       [/unable to validate email/i,        'That does not look like a valid email address.'],
       [/rate limit|too many requests/i,    'Too many attempts just now. Please wait a minute and try again.'],
       [/duplicate key|already exists/i,    'You already have a profile — try reloading the page.'],
